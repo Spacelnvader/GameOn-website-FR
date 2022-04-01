@@ -27,36 +27,41 @@ function closeModal() {
   modalbg.style.display = "none";
 }
 
-// Below Function Executes On Form Submit
+
+const form = document.getElementById ('form');
+const firstName = document.getElementById ('first');
+const lastName = document.getElementById ('last');
+const eMail = document.getElementById ('email');
+const birthDate = document.getElementById ('birthdate');
+const quantityTournament = document.getElementById ('quantity');
+
+
+
+const dateFormat = /^\d{2}[./-]\d{2}[./-]\d{4}$/;
+const numbers = /^[0-9]+$/;
+
+
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+})
+
 function validate() {
-  // Storing Field Values In Variables
-  const firstName = document.getElementById("first").value;
-  const lastName = document.getElementById("last").value;
-  const email = document.getElementById("email").value;
-  const birthDate = document.getElementById("birthDate").value;
-  const numberOfTournament = document.getElementById("quantity").value;
-  const radioButtonsLocation = document.querySelectorAll('input[name="location"]');
-  
-
-  // Regular Expression For Email
-  var emailReg = /^([w-.]+@([w-]+.)+[w-]{2,4})?$/;
-
-  // Conditions
-  if (firstName != '' && lastName != '' && email != '' && birthDate != '' && numberOfTournament != '') {
-  if (email.match(emailReg)) {
-  if(radioButtonsLocation.checked) {
-  alert("Inscription enregistrée !");
-  return true;
-  } else {
-      alert("Choisissez un lieu pour le tournoi de cette année ");
-      return false;
+  if (firstName.value === '') {
+    alert ('there is a problem with the first field');
+  if (firstName.value === '' && firstName.lenght > 1) {
+    alert ("Veuillez remplir le champ Prénom");
+  } 
+  else if (lastName.value === '' && lastName.lenght > 1) { 
+    alert ("Veuillez remplir le champ Nom");
+  } 
+  else if (!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(eMail.value)) { 
+    alert ("Veuillez remplir le champ email");
   }
-  } else {
-      alert("Adresse e-mail invalide");
-      return false;
+  else if (!birthDate.value.match(dateFormat)) { 
+    alert ("Veuillez indiquer votre date de naissance");
   }
-  } else {
-      alert("Tous les champs doivent être complété");
-      return false;
+  else if (!quantityTournament.value.match(numbers)) { 
+    alert ("Veuillez indiquer le nombre de tournois");
   }
   }
+}
