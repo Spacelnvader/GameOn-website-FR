@@ -1,10 +1,10 @@
 function editNav() {
-  var x = document.getElementById("myTopnav");
-  if (x.className === "topnav") {
-    x.className += " responsive";
-  } else {
-    x.className = "topnav";
-  }
+	var x = document.getElementById("myTopnav");
+	if (x.className === "topnav") {
+		x.className += " responsive";
+	} else {
+		x.className = "topnav";
+	}
 }
 
 // DOM Elements
@@ -54,11 +54,11 @@ modalClose.forEach((span) => span.addEventListener("click", closeModal));
 
 // launch modal form
 function launchModal() {
-  modalbg.style.display = "block";
+	modalbg.style.display = "block";
 }
 // close modal form
 function closeModal() {
-  modalbg.style.display = "none";
+	modalbg.style.display = "none";
 }
 
 function firstValidation() {
@@ -74,43 +74,43 @@ function lastValidation() {
 }
 
 function emailValidation() {
-    let regex = /^([a-z0-9_\.-]+\@[\da-z\.-]+\.[a-z\.]{2,6})$/;
-    return regex.test(emailInput.value);
+	let regex = /^([a-z0-9_\.-]+\@[\da-z\.-]+\.[a-z\.]{2,6})$/;
+	return regex.test(emailInput.value);
 }
 
 function birthdateValidation() {
-	let regex = /^\d{2}[./-]\d{2}[./-]\d{4}$/;
-	return regex.test(birthdateInput.value);
-  
+	let inputValue = birthdateInput.value;
+	if (isNaN(inputValue)) return true;
+	else return false;
 }
 
 function quantityValidation() {
-    let regex = /^[0-9]+$/;
-    return regex.test(quantityInput.value);
+	let regex = /^[0-9]+$/;
+	return regex.test(quantityInput.value);
 }
 
 function locationValidation() {
-    let radioButtons = document.querySelectorAll(".checkbox-input[type=radio]");
-    for(let radio of radioButtons){
-        if(radio.checked === true) return true;
-    }
-    return false;
+	let radioButtons = document.querySelectorAll(".checkbox-input[type=radio]");
+	for (let radio of radioButtons) {
+		if (radio.checked === true) return true;
+	}
+	return false;
 }
 
 function checkboxValidation() {
-    let inputValue = document.getElementById("checkbox1").checked;
-    return inputValue;
-    return checkboxInput.checked;
+	let inputValue = document.getElementById("checkbox1").checked;
+	return inputValue;
+	return checkboxInput.checked;
 }
 
 // removes previous alerts
 function removeAlerts() {
-  let alertBoxes = document.querySelectorAll(".form-alert");
+	let alertBoxes = document.querySelectorAll(".form-alert");
 	if (alertBoxes.length > 0) {
 		for (let alert of alertBoxes) {
-      alert.parentNode.removeChild(alert.nextSibling);
-      alert.parentNode.removeChild(alert);
-  }
+			alert.parentNode.removeChild(alert.nextSibling);
+			alert.parentNode.removeChild(alert);
+		}
 	}
 }
 
@@ -119,37 +119,37 @@ document
 	.getElementById("button")
 	.addEventListener("click", function formValidation(event) {
 		event.preventDefault();
-	let isValid = true;
-	removeAlerts();
-	if (!firstValidation()) {
-		isValid = false;
-		isInvalid(firstNameInput, errorMessages.firstName);
-	}
-	if (!lastValidation()) {
-		isValid = false;
-		isInvalid(lastNameInput, errorMessages.lastName);
-	}
-	if (!emailValidation()) {
-		isValid = false;
-		isInvalid(emailInput, errorMessages.email);
-	}
-	if (!birthdateValidation()) {
-		isValid = false;
-		isInvalid(birthdateInput, errorMessages.birthdate);
-	}
-	if (!quantityValidation()) {
-		isValid = false;
-		isInvalid(quantityInput, errorMessages.quantity);
-	}
-	if (!locationValidation()) {
-		isValid = false;
-		isInvalid(radioButtons, errorMessages.location);
-	}
-	if (!checkboxValidation()) {
-		isValid = false;
-		isInvalid(checkboxInput, errorMessages.checkbox);
-	}
-	if (isValid) {
-		form.submit();
-	}
-  });
+		let isValid = true;
+		removeAlerts();
+		if (!firstValidation()) {
+			isValid = false;
+			isInvalid(firstNameInput, errorMessages.firstName);
+		}
+		if (!lastValidation()) {
+			isValid = false;
+			isInvalid(lastNameInput, errorMessages.lastName);
+		}
+		if (!emailValidation()) {
+			isValid = false;
+			isInvalid(emailInput, errorMessages.email);
+		}
+		if (!birthdateValidation()) {
+			isValid = false;
+			isInvalid(birthdateInput, errorMessages.birthdate);
+		}
+		if (!quantityValidation()) {
+			isValid = false;
+			isInvalid(quantityInput, errorMessages.quantity);
+		}
+		if (!locationValidation()) {
+			isValid = false;
+			isInvalid(radioButtons, errorMessages.location);
+		}
+		if (!checkboxValidation()) {
+			isValid = false;
+			isInvalid(checkboxInput, errorMessages.checkbox);
+		}
+		if (isValid) {
+			form.submit();
+		}
+	});
