@@ -60,7 +60,7 @@
               name="reserve"
               action="index.html"
               method="get"
-              onsubmit="return formValidation(event);"
+              onsubmit="return validate(event);"
             >
               <div
                 class="formData">
@@ -219,6 +219,14 @@
                 value="C'est parti"
               />
             </form>
+          </div>
+        </div>
+      </div>
+      <div class="confirm-modal">
+        <div class="modal-body">
+          <div class="content">
+            <p class="confirm-modal-message">Merci ! Votre inscription a bien été prise en compte.</p>
+            <button class="confirm-modal-btn">Fermer</button>
           </div>
         </div>
       </div>

@@ -9,6 +9,9 @@ function editNav() {
 
 // DOM Elements
 const form = document.querySelector("form");
+const modalConfirm = document.querySelector(".confirm-modal");
+const modalConfirmBtn = document.querySelector(".confirm-modal-btn");
+const modalConfirmClose = document.querySelector(".confirm-close");
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
@@ -21,6 +24,9 @@ const birthdateInput = document.getElementById("birthdate");
 const quantityInput = document.getElementById("quantity");
 const radioButtons = document.querySelectorAll(".checkbox-input[type=radio]");
 const checkboxInput = document.getElementById("checkbox1");
+const confirmModal = document.getElementById("confirm-modal");
+
+
 //Error messages
 const errorMessages = {
 	lastName: "Veuillez entrer un nom comportant 2 caractères ou plus.",
@@ -32,20 +38,6 @@ const errorMessages = {
 	location: "Veuillez choisir une ville.",
 	checkbox: "Veuillez accepter les conditions d'utilisation.",
 };
-//Invalid Alert
-function isInvalid(element, message) {
-	let invalidAlert = document.createElement("div");
-	invalidAlert.classList.add("form-alert");
-	let br = document.createElement("br");
-	invalidAlert.innerHTML = message;
-	if (element !== radioButtons) {
-		element.parentElement.append(invalidAlert);
-		element.parentElement.append(br);
-	} else {
-		element[0].parentElement.append(invalidAlert);
-		element[0].parentElement.append(br);
-	}
-}
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
@@ -61,15 +53,43 @@ function closeModal() {
 	modalbg.style.display = "none";
 }
 
+//Invalid Alert
+function isInvalid(element, message) {
+	let invalidAlert = document.createElement("div");
+	invalidAlert.classList.add("form-alert");
+	let br = document.createElement("br");
+	invalidAlert.innerHTML = message;
+	if (element !== radioButtons) {
+		element.parentElement.append(invalidAlert);
+		element.parentElement.append(br);
+	} else {
+		element[0].parentElement.append(invalidAlert);
+		element[0].parentElement.append(br);
+	}
+}
+
+// Valid Alert
+function isValid() {
+	
+	// close modal confirm
+	function closeConfirmModal() {
+		modalConfirm.style.display = "none";
+	}
+	modalForm.style.display = "none";
+	modalConfirm.style.display = "flex";
+	modalConfirmBtn.addEventListener("click", closeConfirmModal);
+	modalConfirmClose.addEventListener("click", closeConfirmModal);
+}
+
 function firstValidation() {
 	let inputValue = firstNameInput.value;
-	if (inputValue !== null && inputValue.length > 2) return true;
+	if (inputValue !== null && inputValue.length >= 2) return true;
 	else return false;
 }
 
 function lastValidation() {
 	let inputValue = lastNameInput.value;
-	if (inputValue !== null && inputValue.length > 2) return true;
+	if (inputValue !== null && inputValue.length >= 2) return true;
 	else return false;
 }
 
@@ -117,39 +137,40 @@ function removeAlerts() {
 
 document
 	.getElementById("button")
-	.addEventListener("click", function formValidation(event) {
+	.addEventListener("click", function validate(event) {
 		event.preventDefault();
-		let isValid = true;
+		let formValid = true;
 		removeAlerts();
 		if (!firstValidation()) {
-			isValid = false;
+			formValid = false;
 			isInvalid(firstNameInput, errorMessages.firstName);
 		}
 		if (!lastValidation()) {
-			isValid = false;
+			formValid = false;
 			isInvalid(lastNameInput, errorMessages.lastName);
 		}
 		if (!emailValidation()) {
-			isValid = false;
+			formValid = false;
 			isInvalid(emailInput, errorMessages.email);
 		}
 		if (!birthdateValidation()) {
-			isValid = false;
+			formValid = false;
 			isInvalid(birthdateInput, errorMessages.birthdate);
 		}
 		if (!quantityValidation()) {
-			isValid = false;
+			formValid = false;
 			isInvalid(quantityInput, errorMessages.quantity);
 		}
 		if (!locationValidation()) {
-			isValid = false;
+			formValid = false;
 			isInvalid(radioButtons, errorMessages.location);
 		}
 		if (!checkboxValidation()) {
-			isValid = false;
+			formValid = false;
 			isInvalid(checkboxInput, errorMessages.checkbox);
 		}
-		if (isValid) {
+		if (formValid) {
 			form.submit();
+			isValid();
 		}
 	});

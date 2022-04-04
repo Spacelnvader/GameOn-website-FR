@@ -14,7 +14,7 @@ body {
   margin: 0;
   display: flex;
   flex-direction: column;
-  background-image: url("background.png");
+  /* background-image: url("background.png"); */
   font-family: var(--font-default);
   font-size: 18px;
   max-width: 1300px;
@@ -296,6 +296,41 @@ input[data-error]::after {
   left: 21%;
   top: 19%;
 }
+
+/* On ajoute un font awesome pour alerter de l'erreur dans un champ */
+.form-alert::before{
+  font-family: "FontAwesome";
+  content: "\f06a";
+  display: inline-block;
+  padding-right: 3px;
+  vertical-align: middle;
+  font-weight:900;
+  color: red;
+}
+/* La div d'alerte ajouté */
+.form-alert{
+  border: 2px solid red;
+  font-size: 18px;
+  margin: 5px;
+  padding: 0px 3px;
+}
+
+.confirm-modal {
+	display: none;
+	position: fixed;
+	z-index: 1;
+	left: 0;
+	top: 0;
+	height: 100%;
+	width: 100%;
+	overflow: auto;
+	background-color: rgba(26, 39, 156, 0.4);
+}
+.confirm-modal-message {
+	min-height: 7px;
+	padding: 78% 5%;
+}
+
 .close {
   position: absolute;
   right: 15px;
@@ -321,6 +356,7 @@ input[data-error]::after {
 .close:after {
   transform: rotate(-45deg);
 }
+.confirm-modal-btn,
 .btn-submit,
 .btn-signup {
   background: #fe142f;
@@ -332,6 +368,9 @@ input[data-error]::after {
   color: #fff;
   cursor: pointer;
   border: 0;
+}
+.confirm-modal-btn {
+	margin-bottom: 1rem;
 }
 /* custom select styles */
 .custom-select {
