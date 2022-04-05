@@ -9,9 +9,10 @@ function editNav() {
 
 // DOM Elements
 const form = document.querySelector("form");
-const modalConfirm = document.querySelector(".confirm-modal");
+
 const modalConfirmBtn = document.querySelector(".confirm-modal-btn");
 const modalConfirmClose = document.querySelector(".confirm-close");
+const confirmModal = document.getElementById("confirm-modal");
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
@@ -24,7 +25,6 @@ const birthdateInput = document.getElementById("birthdate");
 const quantityInput = document.getElementById("quantity");
 const radioButtons = document.querySelectorAll(".checkbox-input[type=radio]");
 const checkboxInput = document.getElementById("checkbox1");
-const confirmModal = document.getElementById("confirm-modal");
 
 
 //Error messages
@@ -32,8 +32,7 @@ const errorMessages = {
 	lastName: "Veuillez entrer un nom comportant 2 caractères ou plus.",
 	firstName: "Veuillez entrer un prénom comportant 2 caractères ou plus.",
 	email: "Veuillez entrer une adresse email valide.",
-	birthdate:
-		"Veuillez entrer une date de naissance valide.",
+	birthdate: "Veuillez entrer une date de naissance valide.",
 	quantity: "Veuillez entrer un nombre valide.",
 	location: "Veuillez choisir une ville.",
 	checkbox: "Veuillez accepter les conditions d'utilisation.",
@@ -66,19 +65,6 @@ function isInvalid(element, message) {
 		element[0].parentElement.append(invalidAlert);
 		element[0].parentElement.append(br);
 	}
-}
-
-// Valid Alert
-function isValid() {
-	
-	// close modal confirm
-	function closeConfirmModal() {
-		modalConfirm.style.display = "none";
-	}
-	modalForm.style.display = "none";
-	modalConfirm.style.display = "flex";
-	modalConfirmBtn.addEventListener("click", closeConfirmModal);
-	modalConfirmClose.addEventListener("click", closeConfirmModal);
 }
 
 function firstValidation() {
@@ -170,7 +156,14 @@ document
 			isInvalid(checkboxInput, errorMessages.checkbox);
 		}
 		if (formValid) {
-			form.submit();
-			isValid();
+				form.submit();
+
+				isValid();
 		}
 	});
+
+	
+// Valid Alert
+ function isValid(){
+	 
+ }
