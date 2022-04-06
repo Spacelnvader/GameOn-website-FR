@@ -9,7 +9,7 @@ function editNav() {
 
 // DOM Elements
 const form = document.querySelector("form");
-
+const modalConfirm = document.querySelector(".confirm-modal");
 const modalConfirmBtn = document.querySelector(".confirm-modal-btn");
 const modalConfirmClose = document.querySelector(".confirm-close");
 const confirmModal = document.getElementById("confirm-modal");
@@ -17,15 +17,17 @@ const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
 const modalClose = document.querySelectorAll("span.close");
-//Form entries
-const firstNameInput = document.getElementById("first");
-const lastNameInput = document.getElementById("last");
-const emailInput = document.getElementById("email");
-const birthdateInput = document.getElementById("birthdate");
-const quantityInput = document.getElementById("quantity");
-const radioButtons = document.querySelectorAll(".checkbox-input[type=radio]");
-const checkboxInput = document.getElementById("checkbox1");
 
+//Form entries
+const formEntries = {
+firstNameInput: document.getElementById("first"),
+lastNameInput: document.getElementById("last"),
+emailInput: document.getElementById("email"),
+birthdateInput: document.getElementById("birthdate"),
+quantityInput: document.getElementById("quantity"),
+radioButtons: document.getElementsByName("location"),
+checkboxInput: document.getElementById("checkbox1"),
+}
 
 //Error messages
 const errorMessages = {
@@ -46,6 +48,7 @@ modalClose.forEach((span) => span.addEventListener("click", closeModal));
 // launch modal form
 function launchModal() {
 	modalbg.style.display = "block";
+	form.style.display = "block";
 }
 // close modal form
 function closeModal() {
@@ -67,32 +70,46 @@ function isInvalid(element, message) {
 	}
 }
 
-function firstValidation() {
-	let inputValue = firstNameInput.value;
-	if (inputValue !== null && inputValue.length >= 2) return true;
-	else return false;
+//Valid Alert
+function isValid() {
+	form.style.display = "none";
+
+	// close modal confirm
+	function closeConfirmModal() {
+		modalConfirm.style.display = "none";
+	}
+	modalbg.style.display = "none";
+	modalConfirm.style.display = "flex";
+	modalConfirmBtn.addEventListener("click", closeConfirmModal);
+	modalConfirmClose.addEventListener("click", closeConfirmModal);
 }
 
+function firstValidation() {
+	let inputValue = formEntries.firstNameInput.value;
+	if (inputValue !== null && inputValue.length >= 2) return true;
+	else return false;
+	
+}
 function lastValidation() {
-	let inputValue = lastNameInput.value;
+	let inputValue = formEntries.lastNameInput.value;
 	if (inputValue !== null && inputValue.length >= 2) return true;
 	else return false;
 }
 
 function emailValidation() {
 	let regex = /^([a-z0-9_\.-]+\@[\da-z\.-]+\.[a-z\.]{2,6})$/;
-	return regex.test(emailInput.value);
+	return regex.test(formEntries.emailInput.value);
 }
 
 function birthdateValidation() {
-	let inputValue = birthdateInput.value;
+	let inputValue = formEntries.birthdateInput.value;
 	if (isNaN(inputValue)) return true;
 	else return false;
 }
 
 function quantityValidation() {
 	let regex = /^[0-9]+$/;
-	return regex.test(quantityInput.value);
+	return regex.test(formEntries.quantityInput.value);
 }
 
 function locationValidation() {
@@ -106,7 +123,7 @@ function locationValidation() {
 function checkboxValidation() {
 	let inputValue = document.getElementById("checkbox1").checked;
 	return inputValue;
-	return checkboxInput.checked;
+
 }
 
 // removes previous alerts
@@ -119,8 +136,9 @@ function removeAlerts() {
 		}
 	}
 }
-
-
+//store de value of the form in an array 
+formResults = [];
+// this function will launch by clicking on the buttons, it will check the form entries and will execute the function IsValid
 document
 	.getElementById("button")
 	.addEventListener("click", function validate(event) {
@@ -130,40 +148,59 @@ document
 		if (!firstValidation()) {
 			formValid = false;
 			isInvalid(firstNameInput, errorMessages.firstName);
+		} else {
+			const firstName = formEntries.firstNameInput.value;
+			formResults.push(firstName);
 		}
 		if (!lastValidation()) {
 			formValid = false;
 			isInvalid(lastNameInput, errorMessages.lastName);
+		} else {
+			const lastName = formEntries.lastNameInput.value;
+			formResults.push(lastName);
 		}
 		if (!emailValidation()) {
 			formValid = false;
 			isInvalid(emailInput, errorMessages.email);
+		} else {
+			const eMail = formEntries.emailInput.value;
+			formResults.push(eMail);
 		}
 		if (!birthdateValidation()) {
 			formValid = false;
 			isInvalid(birthdateInput, errorMessages.birthdate);
+		} else {
+			const birthDate = formEntries.birthdateInput.value;
+			formResults.push(birthDate);
 		}
 		if (!quantityValidation()) {
 			formValid = false;
 			isInvalid(quantityInput, errorMessages.quantity);
+		} else {
+			const quantity = formEntries.quantityInput.value;
+			formResults.push(quantity);
 		}
 		if (!locationValidation()) {
 			formValid = false;
 			isInvalid(radioButtons, errorMessages.location);
+		} else {
+			for (const radio of formEntries.radioButtons) {
+				if (radio.checked) {
+					formResults.push(radio.value);
+				}
+			}
+			// const location = formEntries.radioButtons.value;
+			// formResults.push(location);
 		}
 		if (!checkboxValidation()) {
 			formValid = false;
 			isInvalid(checkboxInput, errorMessages.checkbox);
-		}
+		} 
 		if (formValid) {
-				form.submit();
-
-				isValid();
-		}
+			isValid();
+			console.log(formResults);
+			
+		}	
 	});
-
 	
-// Valid Alert
- function isValid(){
-	 
- }
+
