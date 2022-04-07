@@ -108,7 +108,8 @@ main {
   padding-top: 0.5vw;
   padding-left: 2vw;
   padding-right: 2vw;
-  margin: 1px 20px 15px;
+  /* margin removed for hidden text on small phone screen */
+  /* margin: 1px 20px 15px; */
   border-radius: 2rem;
   text-align: justify;
 
@@ -459,7 +460,8 @@ input[data-error]::after {
   color: #fff;
   position: relative;
   text-align: left;
-  min-width: 424px;
+  /* The line below is removed because it hide the text on small phone screen */
+  /* min-width: 424px; */
 }
 .hero-content::after {
   content: "";
@@ -495,6 +497,8 @@ input[data-error]::after {
 }
 .hero-img {
   grid-column: span 8;
+  /* Z-index modifié pour le navigateur mozilla firefox */
+  z-index: 0;
 }
 .hero-img img {
   width: 100%;

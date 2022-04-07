@@ -20,14 +20,14 @@ const modalClose = document.querySelectorAll("span.close");
 
 //Form entries
 const formEntries = {
-firstNameInput: document.getElementById("first"),
-lastNameInput: document.getElementById("last"),
-emailInput: document.getElementById("email"),
-birthdateInput: document.getElementById("birthdate"),
-quantityInput: document.getElementById("quantity"),
-radioButtons: document.getElementsByName("location"),
-checkboxInput: document.getElementById("checkbox1"),
-}
+	firstNameInput: document.getElementById("first"),
+	lastNameInput: document.getElementById("last"),
+	emailInput: document.getElementById("email"),
+	birthdateInput: document.getElementById("birthdate"),
+	quantityInput: document.getElementById("quantity"),
+	radioButtons: document.getElementsByName("location"),
+	checkboxInput: document.getElementById("checkbox1"),
+};
 
 //Error messages
 const errorMessages = {
@@ -61,12 +61,13 @@ function isInvalid(element, message) {
 	invalidAlert.classList.add("form-alert");
 	let br = document.createElement("br");
 	invalidAlert.innerHTML = message;
-	if (element !== radioButtons) {
+	if (element !== formEntries.radioButtons) {
 		element.parentElement.append(invalidAlert);
 		element.parentElement.append(br);
 	} else {
 		element[0].parentElement.append(invalidAlert);
 		element[0].parentElement.append(br);
+		
 	}
 }
 
@@ -82,6 +83,7 @@ function isValid() {
 	modalConfirm.style.display = "flex";
 	modalConfirmBtn.addEventListener("click", closeConfirmModal);
 	modalConfirmClose.addEventListener("click", closeConfirmModal);
+	
 }
 
 function firstValidation() {
@@ -138,7 +140,10 @@ function removeAlerts() {
 }
 //store de value of the form in an array 
 formResults = [];
-// this function will launch by clicking on the buttons, it will check the form entries and will execute the function IsValid
+
+// this function will launch by clicking on the buttons
+// it will check the form entries and will execute the function IsValid
+// while incrementing the array above
 document
 	.getElementById("button")
 	.addEventListener("click", function validate(event) {
@@ -147,56 +152,54 @@ document
 		removeAlerts();
 		if (!firstValidation()) {
 			formValid = false;
-			isInvalid(firstNameInput, errorMessages.firstName);
+			isInvalid(formEntries.firstNameInput, errorMessages.firstName);
 		} else {
 			const firstName = formEntries.firstNameInput.value;
-			formResults.push(firstName);
+			formResults.splice(0, 1, firstName);
 		}
 		if (!lastValidation()) {
 			formValid = false;
-			isInvalid(lastNameInput, errorMessages.lastName);
+			isInvalid(formEntries.lastNameInput, errorMessages.lastName);
 		} else {
 			const lastName = formEntries.lastNameInput.value;
-			formResults.push(lastName);
+			formResults.splice(1, 1, lastName);
 		}
 		if (!emailValidation()) {
 			formValid = false;
-			isInvalid(emailInput, errorMessages.email);
+			isInvalid(formEntries.emailInput, errorMessages.email);
 		} else {
 			const eMail = formEntries.emailInput.value;
-			formResults.push(eMail);
+			formResults.splice(2, 1, eMail);
 		}
 		if (!birthdateValidation()) {
 			formValid = false;
-			isInvalid(birthdateInput, errorMessages.birthdate);
+			isInvalid(formEntries.birthdateInput, errorMessages.birthdate);
 		} else {
 			const birthDate = formEntries.birthdateInput.value;
-			formResults.push(birthDate);
+			formResults.splice(3, 1, birthDate);
 		}
 		if (!quantityValidation()) {
 			formValid = false;
-			isInvalid(quantityInput, errorMessages.quantity);
+			isInvalid(formEntries.quantityInput, errorMessages.quantity);
 		} else {
 			const quantity = formEntries.quantityInput.value;
-			formResults.push(quantity);
+			formResults.splice(4, 1, quantity);
 		}
 		if (!locationValidation()) {
 			formValid = false;
-			isInvalid(radioButtons, errorMessages.location);
+			isInvalid(formEntries.radioButtons, errorMessages.location);
 		} else {
 			for (const radio of formEntries.radioButtons) {
 				if (radio.checked) {
-					formResults.push(radio.value);
+					formResults.splice(5, 1, radio.value);
 				}
-			}
-			// const location = formEntries.radioButtons.value;
-			// formResults.push(location);
+			}	
 		}
 		if (!checkboxValidation()) {
 			formValid = false;
-			isInvalid(checkboxInput, errorMessages.checkbox);
+			isInvalid(formEntries.checkboxInput, errorMessages.checkbox);
 		} 
-		if (formValid) {
+		if (formValid && (formResults.length = 6)) {
 			isValid();
 			console.log(formResults);
 			
