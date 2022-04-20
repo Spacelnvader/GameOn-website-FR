@@ -209,6 +209,8 @@ input {
   font-size: 20px;
   height: 48px;
 }
+
+
 .formData[data-error]::after {
   content: attr(data-error);
   font-size: 0.4em;
@@ -299,7 +301,7 @@ input[data-error]::after {
 }
 
 /* On ajoute un font awesome pour alerter de l'erreur dans un champ */
-.form-alert::before{
+/* .form-alert::before{
   font-family: "FontAwesome";
   content: "\f06a";
   display: inline-block;
@@ -307,13 +309,15 @@ input[data-error]::after {
   vertical-align: middle;
   font-weight:900;
   color: red;
-}
+} */
+
 /* La div d'alerte ajouté */
 .form-alert{
-  border: 2px solid red;
-  font-size: 18px;
+  
+  font-size: 14px;
   margin: 5px;
   padding: 0px 3px;
+  color: red;
 }
 
 .confirm-modal {

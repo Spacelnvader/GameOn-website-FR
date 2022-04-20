@@ -57,6 +57,7 @@ function closeModal() {
 
 //Invalid Alert
 function isInvalid(element, message) {
+	
 	let invalidAlert = document.createElement("div");
 	invalidAlert.classList.add("form-alert");
 	let br = document.createElement("br");
@@ -67,8 +68,15 @@ function isInvalid(element, message) {
 	} else {
 		element[0].parentElement.append(invalidAlert);
 		element[0].parentElement.append(br);
-		
 	}
+}
+
+//Cette fonction encadrera en rouge l'input de l'élément formEntries concerné si ce n'est pas un radio bouton
+function invalidInput(element) {
+	
+	if (element !== formEntries.radioButtons) {
+		element.style.border ="2px solid red";	
+	} 
 }
 
 //Valid Alert
@@ -78,6 +86,9 @@ function isValid() {
 	// close modal confirm
 	function closeConfirmModal() {
 		modalConfirm.style.display = "none";
+
+		//effacer les champs du formulaire quand on ferme la modal de confirmation
+		form.reset();
 	}
 	modalbg.style.display = "none";
 	modalConfirm.style.display = "flex";
@@ -86,14 +97,17 @@ function isValid() {
 	
 }
 
+
+
 function firstValidation() {
-	let inputValue = formEntries.firstNameInput.value;
+	// .trim() pour enlever les espaces
+	let inputValue = formEntries.firstNameInput.value.trim();
 	if (inputValue !== null && inputValue.length >= 2) return true;
 	else return false;
 	
 }
 function lastValidation() {
-	let inputValue = formEntries.lastNameInput.value;
+	let inputValue = formEntries.lastNameInput.value.trim();
 	if (inputValue !== null && inputValue.length >= 2) return true;
 	else return false;
 }
@@ -130,6 +144,8 @@ function checkboxValidation() {
 
 // removes previous alerts
 function removeAlerts() {
+	// let invalidInput = docuement.querySelectorAll(".text-control");
+	// invalidInput.style.border = "none";
 	let alertBoxes = document.querySelectorAll(".form-alert");
 	if (alertBoxes.length > 0) {
 		for (let alert of alertBoxes) {
@@ -138,6 +154,11 @@ function removeAlerts() {
 		}
 	}
 }
+
+function removeBorders(element) {
+	element.style.border ="0px";
+}
+
 //store de value of the form in an array 
 formResults = [];
 
@@ -153,30 +174,38 @@ document
 		if (!firstValidation()) {
 			formValid = false;
 			isInvalid(formEntries.firstNameInput, errorMessages.firstName);
+			invalidInput(formEntries.firstNameInput);
 		} else {
 			const firstName = formEntries.firstNameInput.value;
 			formResults.splice(0, 1, firstName);
+			removeBorders(formEntries.firstNameInput);
 		}
 		if (!lastValidation()) {
 			formValid = false;
 			isInvalid(formEntries.lastNameInput, errorMessages.lastName);
+			invalidInput(formEntries.lastNameInput);
 		} else {
 			const lastName = formEntries.lastNameInput.value;
 			formResults.splice(1, 1, lastName);
+			removeBorders(formEntries.lastNameInput);
 		}
 		if (!emailValidation()) {
 			formValid = false;
 			isInvalid(formEntries.emailInput, errorMessages.email);
+			invalidInput(formEntries.emailInput);
 		} else {
 			const eMail = formEntries.emailInput.value;
 			formResults.splice(2, 1, eMail);
+			removeBorders(formEntries.emailInput);
 		}
 		if (!birthdateValidation()) {
 			formValid = false;
 			isInvalid(formEntries.birthdateInput, errorMessages.birthdate);
+			invalidInput(formEntries.birthdateInput);
 		} else {
 			const birthDate = formEntries.birthdateInput.value;
 			formResults.splice(3, 1, birthDate);
+			removeBorders(formEntries.birthdateInput);
 		}
 		if (!quantityValidation()) {
 			formValid = false;
