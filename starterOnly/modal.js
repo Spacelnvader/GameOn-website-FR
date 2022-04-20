@@ -141,7 +141,7 @@ function removeAlerts() {
 //store de value of the form in an array 
 formResults = [];
 
-// this function will launch by clicking on the buttons
+// this function will launch by clicking on the submit button
 // it will check the form entries and will execute the function IsValid
 // while incrementing the array above
 document
